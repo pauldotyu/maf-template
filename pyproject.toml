@@ -1,0 +1,21 @@
+[project]
+name = "maf"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "agent-framework>=1.13.0",
+    "agent-framework-devui>=1.0.0b260730",
+    "opentelemetry-exporter-otlp-proto-grpc>=1.43.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.16.1",
+    "debugpy>=1.8.21",
+    "pytest>=9.1.1",
+]
+
+[tool.uv]
+prerelease = "allow"

@@ -16,8 +16,19 @@ storage:
     wal:
       path: /tmp/tempo/wal
 
+# Tempo 3.0 removed the local-blocks processor and the metrics_generator.traces_storage
+# field. The span-metrics / service-graphs generators now remote-write directly to
+# Prometheus; enable the processors in overrides so they actually run.
 metrics_generator:
   storage:
     path: /tmp/tempo/generator/wal
-  traces_storage:
-    path: /tmp/tempo/generator/traces
+    remote_write:
+      - url: http://prometheus:9090/api/v1/write
+        send_exemplars: true
+
+overrides:
+  defaults:
+    metrics_generator:
+      processors:
+        - span-metrics
+        - service-graphs

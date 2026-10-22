@@ -492,7 +492,7 @@ wheels = [
 ]
 
 [[package]]
-name = "agent-framework-with-local-llms"
+name = "maf"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

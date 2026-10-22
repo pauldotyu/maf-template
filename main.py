@@ -1,4 +1,5 @@
 import asyncio
+import os
 
 from agent_framework import Agent
 from agent_framework.observability import configure_otel_providers
@@ -6,7 +7,8 @@ from agent_framework.openai import OpenAIChatClient
 from dotenv import load_dotenv
 
 load_dotenv()
-configure_otel_providers(enable_sensitive_data=True)
+enable_instrumentation = os.getenv("ENABLE_INSTRUMENTATION", "false").lower() == "true"
+configure_otel_providers(enable_sensitive_data=True) if enable_instrumentation else None
 
 
 async def main():

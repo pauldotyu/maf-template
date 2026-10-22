@@ -1,0 +1,64 @@
+[project]
+name = "maf"
+version = "0.1.0"
+description = "Microsoft Agent Framework template: a FastAPI service that runs an AI agent"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "agent-framework-core>=1.14,<2",
+    "agent-framework-openai>=1.13,<2",
+    "fastapi>=0.116,<1",
+    "uvicorn>=0.35,<1",
+    "opentelemetry-api>=1.39,<2",
+    "opentelemetry-sdk>=1.39,<2",
+    "opentelemetry-exporter-otlp-proto-http>=1.36,<2",
+    "opentelemetry-exporter-otlp-proto-grpc>=1.43,<2",
+    "opentelemetry-instrumentation-asgi>=0.57b0,<1",
+    "opentelemetry-instrumentation-httpx>=0.57b0,<1",
+    "prometheus-client>=0.23,<1",
+    "azure-identity>=1.26,<2",
+    "pydantic-settings>=2.12,<3",
+]
+
+[project.scripts]
+maf-serve = "maf.run_service:main"
+maf-healthcheck = "maf.healthcheck:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/maf"]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.16.1",
+    "debugpy>=1.8.21",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.1,<2",
+    "httpx>=0.28,<1",
+    "pyright>=1.1,<2",
+]
+
+[tool.uv]
+prerelease = "allow"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 88
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "UP"]
+
+[tool.pyright]
+pythonVersion = "3.14"
+typeCheckingMode = "basic"
+include = ["src", "tests"]
+exclude = ["**/__pycache__"]
+reportMissingTypeStubs = false
